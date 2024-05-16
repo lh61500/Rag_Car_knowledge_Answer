@@ -46,14 +46,14 @@ for q1,q2 in zip(bm25,model):
             fusion_score[q] +=1/(idx+k)
     sorted_dict= sorted(fusion_score.items(),key=lambda item:item[1],reverse=True)
     q1['reference']=sorted_dict[0][0]
-
+print(sorted_dict)
 # 这里需要进行配对 将文本对用户提问与检索得到结果进行拼接
 pairs = []
 for sorted_result in sorted_dict[:3]:
     page_id = sorted_result[0]  # 获取页码
     page_index = int(page_id.split('_')[1]) - 1  # 将页码转换为索引
     content=pdf_content[page_index]['content']
-    pairs.append([questions[0]['question'],[page_id],content])
+    pairs.append([questions[0]['question'],content])
 print(pairs)
 inputs = tokenizer(pairs, padding=True, truncation=True, return_tensors='pt', max_length=512)
 with torch.no_grad():
