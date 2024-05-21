@@ -53,7 +53,8 @@ for sorted_result in sorted_dict[:3]:
     page_id = sorted_result[0]  # 获取页码
     page_index = int(page_id.split('_')[1]) - 1  # 将页码转换为索引
     content=pdf_content[page_index]['content']
-    pairs.append([questions[0]['question'],content])
+    for  in max_score_page_idxs:
+    pairs.append([questions[page_index]['question'],pdf_content[page_index]['content']])
 print(pairs)
 inputs = tokenizer(pairs, padding=True, truncation=True, return_tensors='pt', max_length=512)
 with torch.no_grad():
